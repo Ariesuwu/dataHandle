@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
@@ -8,6 +8,7 @@ import WhatshotIcon from "@material-ui/icons/Whatshot";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { Button, Divider } from "@material-ui/core";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -35,8 +36,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function IconBreadcrumbs() {
+export default function Grades() {
   const classes = useStyles();
+  const [grades, getGrades] = useState('');
+
+  const url = "http://localhost:4000";
+
+  const getAllGrades = () => {
+    axios.get(`${url}/grades`)
+    .then((response) => {
+      const AllGrades = response.data.grades
+
+      getGrades(AllGrades)
+      console.log(AllGrades)
+    })
+    .catch(error => console.error(`Error: ${error}`))
+  };
+
+  console.log(getAllGrades);
 
   return (
     <div>
