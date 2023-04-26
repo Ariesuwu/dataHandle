@@ -9,6 +9,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import { Button, Divider } from "@material-ui/core";
 import axios from "axios";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -40,20 +41,23 @@ export default function Grades() {
   const classes = useStyles();
   const [grades, getGrades] = useState('');
 
-  const url = "http://localhost:4000";
+  const url = "http://localhost:4000/grades"
+
+  useEffect(() => {
+    getAllGrades();
+}, []);
 
   const getAllGrades = () => {
-    axios.get(`${url}/grades`)
+    axios.get(`${url}`)
     .then((response) => {
-      const AllGrades = response.data.grades
-
-      getGrades(AllGrades)
-      console.log(AllGrades)
+      const AllGrades = response.data
+      console.log(AllGrades);
     })
-    .catch(error => console.error(`Error: ${error}`))
-  };
-
-  console.log(getAllGrades);
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+  
 
   return (
     <div>

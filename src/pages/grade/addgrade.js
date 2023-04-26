@@ -37,6 +37,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function IconBreadcrumbs() {
   const classes = useStyles();
+  const [grade, setGrade] = React.useState("");
+  const [description, setDescription] = React.useState("");
+
+  const GradehandleChange = name => e => {
+    setGrade({ [name]: e.target.value });
+};
+
+const DescriptionhandleChange = name => e => {
+  setDescription({ [name]: e.target.value });
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  const grade = grade;
+  const description = description
+
+  await axios.post('http://localhost:4000/grades/add', user);        
+};
 
   return (
     <div>
@@ -81,6 +100,8 @@ export default function IconBreadcrumbs() {
                 type="text"
                 class="form-control"
                 id="Grade"
+                value={grade}
+                onChange={GradehandleChange}
               />
             </div>
             <div class="form-group">
@@ -89,6 +110,8 @@ export default function IconBreadcrumbs() {
                 type="text"
                 class="form-control"
                 id="description"
+                value={description}
+                onChange={DescriptionhandleChange}
               />
             </div>
             <Button variant="contained" style={{ color:"#00c853", border: "1px solid #00c853" }}>
